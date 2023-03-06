@@ -10,6 +10,7 @@
         </div>
     <br />
         <div>hello lyzette!</div>
+        <div>hello renren</div>
         <table class="table table-striped table-bordered " id="user_datatable">
             <thead>
                 <tr>
