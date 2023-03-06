@@ -9,6 +9,7 @@
                 <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i>action </button>
         </div>
     <br />
+        <div>hello lyzette!</div>
         <div>hello renren</div>
         <table class="table table-striped table-bordered " id="user_datatable">
             <thead>
