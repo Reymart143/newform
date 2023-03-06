@@ -22,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/create',[UserController::class, 'create']);
+Route::get('/users',[UserController::class, 'index'])->name('users.index');
+
 
 
  

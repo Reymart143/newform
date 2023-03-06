@@ -14,6 +14,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     @vite(['resources/js/app.js'])
+
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css">
+    
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
 </head>
 <body>

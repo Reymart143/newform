@@ -46,10 +46,10 @@
                             <div id="bloodtype-container">
                                  <select id="bloodtype" class="form-select" aria-label="Default select example">
                                 <option selected>Select BLoodtype</option>
-                                <option value="1">Type O</option>
-                                <option value="2">Type A</option>
-                                <option value="3">Type B</option>
-                                <option value="3">Type AB</option>
+                                <option value="0">Type O</option>
+                                <option value="A">Type A</option>
+                                <option value="B">Type B</option>
+                                <option value="AB">Type AB</option>
                               </select> 
                             </div>
                           
@@ -59,7 +59,7 @@
                             <div id="address-container">
                                  <select id="region" class="form-select mb-3" aria-label="Default select example">
                                 <option selected>Select Region</option>
-                                <option value="1">bulua</option>
+                                <option value="2">bulua</option>
                                 <option value="2">A</option>
                                 <option value="3">B</option>
                                 <option value="3">AB</option>
