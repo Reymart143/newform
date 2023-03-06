@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('barangay');
             $table->string('purok');
+            $table->boolean('is_admin')->default(0);
         });
     }
 
