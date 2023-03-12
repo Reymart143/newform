@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/create',[UserController::class, 'create']);
-Route::get('/users',[UserController::class, 'index'])->name('users.index');
+//admin route
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get('province-list/provinces/{region}', [UserController::class, 'province']);
+Route::get('municipalities-list/municipality/{province}', [UserController::class, 'municipality']);
 
-
-
+Route::middleware(['isAdmin'])->group(function () {
+    Route::get('/users',[UserController::class, 'index'])->name('users.index');
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('users/edit/{id}/', [UserController::class, 'edit']);
+    Route::post('users/update', [UserController::class, 'update'])->name('users.update');
+    Route::get('users/destroy/{id}/', [UserController::class, 'destroy']);
+    Route::get('users/removeall', [UserController::class, 'removeall'])->name('users.removeall');
+});
  
