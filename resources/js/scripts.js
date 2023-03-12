@@ -25,6 +25,7 @@ $('#submit-btn').on('click', function (e) {
         'purok': $('#purok').val(),
         'username': $('#username').val(),
         'password': $('#password').val(),
+        'confirm-password': $('#confirm-password').val()
     }
     console.log(userform);
     $.ajax({
@@ -33,7 +34,18 @@ $('#submit-btn').on('click', function (e) {
         data: userform,
         dataType: 'json',
         success: function (response) {
-            alert(response.message)
-        }
+            Swal.fire(
+                'Good job!',
+                'Registered Account Successfully',
+                'success'
+                ) 
+                $('.form-input').val('')
+                $('#bloodtype').val(0)
+                $('#region').val(0)
+                $('#province').val(0)
+                $('#city').val(0)
+                $('#barangay').val(0)
+                $('.form-check-input').prop('checked',false)
+        } 
     })
 })

@@ -25,6 +25,7 @@ class UserController extends Controller
                 'purok'=> $request->purok,
                 'age'=> $request->age,
                 'username'=> $request->username,
+                'confirm-password' => $hashed,
                 'password'=> $hashed
             ]);
                 return response()->json([
@@ -35,7 +36,7 @@ class UserController extends Controller
 
 public function index(Request $request){
     if ($request->ajax()) {
-        $data = User::select('name','birthdate','gender','age','bloodtype','number','region','province','city','barangay','purok','username')->get();
+        $data = User::select('name','birthdate','gender','age','bloodtype','number','region','province','city','barangay','purok','username','password','confirm-password')->get();
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function($data){
                 $button = '
