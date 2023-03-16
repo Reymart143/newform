@@ -31,7 +31,7 @@ class User extends Authenticatable
         'birthdate',
         'age',
         'barangay',
-      
+        'password_confirmation'
     ];
 
     /**

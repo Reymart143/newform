@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->integer('age');
-            $table->integer('number');
+            $table->string('number');
             $table->date('birthdate');
             $table->string('bloodtype');
             $table->string('username');
             $table->string('password');
+            $table->string('password_confirmation');
             $table->string('region');
             $table->string('province');
             $table->string('city');

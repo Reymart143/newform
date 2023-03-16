@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="/front/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+
+    <!-- Libraries Stylesheet -->
+    <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/front/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/front/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary">OBX Solutions</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class ="rounded-circle" src="/front/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">{{Auth::user()->name}}</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="{{url('/home')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{url('/profile')}}" class="nav-item nav-link active"><i class="fa-solid fa-user me-2"></i>Profile</a>
+                    <a href="{{url('/tables')}}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+         <!-- Content Start -->
+         <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="{{url('/home')}}" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/front/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">{{Auth::user()->name}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{url('/profile')}} "class="dropdown-item">My Profile</a>
+
+
+                            <a href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();" class="dropdown-item">Log Out</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+            <div class="container-fluid pt-4 px-4">
+               <div class="bg-secondary text-center rounded p-4">
+                  <div class="row column1">
+                     <div class="col-md-2"></div>
+                     <div class="col-md-8">
+                        <div class="white_shd full margin_bottom_30">
+                           <div class="full graph_head">
+                              <div class="heading1 margin_0">
+                                 <h2>User profile</h2>
+                              </div>
+                           </div>
+                           <div class="full price_table padding_infor_info">
+                              <div class="row">
+                                 <!-- user profile section --> 
+                                 <!-- profile image -->
+                                 <div class="col-lg-12">
+                                    <div class="full dis_flex center_text">
+                                       <div class="profile_img"><img width="180" class="rounded-circle" src="/front/img/user.jpg" alt="#" /></div>
+                                       <div class="profile_contant">
+                                          <div class="contact_inner">
+                                             <h3>John Smith</h3>
+                                             <p><strong>About: </strong>Frontend Developer</p>
+                                             <ul class="list-unstyled">
+                                                <li><i class="fa fa-envelope-o"></i> : test@gmail.com</li>
+                                                <li><i class="fa fa-phone"></i> : 987 654 3210</li>
+                                             </ul>
+                                          </div>
+                                          <div class="user_progress_bar">
+                                             <div class="progress_bar">
+                                                <!-- Skill Bars -->
+                                                <span class="skill" style="width:85%;">Web Applications <span class="info_valume">85%</span></span>                   
+                                                <div class="progress skill-bar ">
+                                                   <div class="progress-bar progress-bar-animated progress-bar-striped" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;">
+                                                   </div>
+                                                </div>
+                                                <span class="skill" style="width:78%;">Website Design <span class="info_valume">78%</span></span>   
+                                                <div class="progress skill-bar">
+                                                   <div class="progress-bar progress-bar-animated progress-bar-striped" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" style="width: 78%;">
+                                                   </div>
+                                                </div>
+                                                <span class="skill" style="width:47%;">Automation & Testing <span class="info_valume">47%</span></span>
+                                                <div class="progress skill-bar">
+                                                   <div class="progress-bar progress-bar-animated progress-bar-striped" role="progressbar" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100" style="width: 54%;">
+                                                   </div>
+                                                </div>
+                                                <span class="skill" style="width:65%;">UI / UX <span class="info_valume">65%</span></span>
+                                                <div class="progress skill-bar">
+                                                   <div class="progress-bar progress-bar-animated progress-bar-striped" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="width: 65%;">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+     
+                                    <!-- profile contant section -->
+                                    <div class="full inner_elements margin_top_30">
+                                       <div class="tab_style2">
+                                          <div class="tabbar">
+                                             <nav>
+                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                   <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#recent_activity" role="tab" aria-selected="true">Recent Activity</a>
+                                                   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Projects Worked on</a>
+                                                   <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#profile_section" role="tab" aria-selected="false">Profile</a>
+                                                </div>
+                                             </nav>
+                                             <div class="tab-content" id="nav-tabContent">
+                                                <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                   <div class="msg_list_main">
+                                                      <ul class="msg_list">
+                                                         <li>
+                                                            <span><img src="/front/img/user.jpg" class="img-responsive" alt="#"></span>
+                                                            <span>
+                                                            <span class="name_user">Taison Jack</span>
+                                                            <span class="msg_user">Sed ut perspiciatis unde omnis.</span>
+                                                            <span class="time_ago">12 min ago</span>
+                                                            </span>
+                                                         </li>
+                                                         <li>
+                                                            <span><img src="/front/img/user.jpg" class="img-responsive" alt="#"></span>
+                                                            <span>
+                                                            <span class="name_user">Mike John</span>
+                                                            <span class="msg_user">On the other hand, we denounce.</span>
+                                                            <span class="time_ago">12 min ago</span>
+                                                            </span>
+                                                         </li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="project_worked" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                   <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et 
+                                                      quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos 
+                                                      qui ratione voluptatem sequi nesciunt.
+                                                   </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="profile_section" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                                   <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et 
+                                                      quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos 
+                                                      qui ratione voluptatem sequi nesciunt.
+                                                   </p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!-- end user profile section -->
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                     </div>
+                     <!-- end row -->
+                 </div>
+               </div>
+           </div>
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+               <div class="bg-secondary rounded-top p-4">
+                   <div class="row">
+                       <div class="col-12 col-sm-6 text-center text-sm-start">
+                           &copy; <a href="#">OBX Solutions</a>, All Right Reserved. 
+                           <br><i class="fa-solid fa-location-dot"></i> VLC Tower One, Gran Via, Cagayan de Oro City, Misamis Oriental
+                           
+                       </div>
+                       <div class="col-12 col-sm-6 text-center text-sm-end">
+                           <i class="fa-regular fa-envelope"></i> info@obxsolution.com
+                           <br><i class="fa-solid fa-business-time"></i> 09:00 am - 05:00 pm
+                       </div>
+                   </div>
+               </div>
+           </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/front/lib/chart/chart.min.js"></script>
+        <script src="/front/lib/easing/easing.min.js"></script>
+        <script src="/front/lib/waypoints/waypoints.min.js"></script>
+        <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="/front/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="/front/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="/front/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="/front/js/main.js"></script>
+</body>
+
+</html>

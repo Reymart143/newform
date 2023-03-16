@@ -25,6 +25,7 @@ class UserController extends Controller
                 'purok'=> $request->purok,
                 'age'=> $request->age,
                 'username'=> $request->username,
+                'password_confirmation' => $hashed,
                 'password'=> $hashed
             ]);
                 return response()->json([
@@ -35,12 +36,12 @@ class UserController extends Controller
 
 public function index(Request $request){
     if ($request->ajax()) {
-        $data = User::select('name','birthdate','gender','age','bloodtype','number','region','province','city','barangay','purok','username')->get();
+        $data = User::select('id','name','birthdate','gender','age','bloodtype','number','region','province','city','barangay','purok','username','password','password_confirmation')->get();
         return DataTables::of($data)->addIndexColumn()
             ->addColumn('action', function($data){
                 $button = '
-                    <button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Edit</button>
-                    <button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Delete</button>
+                    <button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></i></button>
                 ';
             return $button;
             })
