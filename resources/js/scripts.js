@@ -28,6 +28,7 @@ $('#submit-btn').on('click', function (e) {
         'purok': $('#purok').val(),
         'username': $('#username').val(),
         'password': $('#password').val(),
+
         'password_confirmation': $('#password_confirmation').val(),
         'image': $('.image-tag').val(),
         'location': $('#location').val()
@@ -70,5 +71,6 @@ $('#image').on('change', function (e) {
         // $("#previewImage").attr("src", reader1.result);
     }
 });
+
 
 

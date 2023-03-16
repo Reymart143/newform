@@ -45,10 +45,12 @@ class UserController extends Controller
                 'purok'=> $request->purok,
                 'age'=> $request->age,
                 'username'=> $request->username,
+
                 'password'=> $hashed,
                 'image'=>$fileName,
                 'location'=> $request->location
                 
+
             ]);
                     return response()->json([
                    
@@ -100,6 +102,20 @@ class UserController extends Controller
             'status'=> 200,
             'data'=> $municipality
         ]);
+
+public function index(Request $request){
+    if ($request->ajax()) {
+        $data = User::select('id','name','birthdate','gender','age','bloodtype','number','region','province','city','barangay','purok','username','password','password_confirmation')->get();
+        return DataTables::of($data)->addIndexColumn()
+            ->addColumn('action', function($data){
+                $button = '
+                    <button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></i></button>
+                ';
+            return $button;
+            })
+            ->make(true);
+
     }
   
     public function edit($id)

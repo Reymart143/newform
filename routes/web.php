@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\Auth\RegisterController;
+
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TableController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +25,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::post('/create',[UserController::class, 'create']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -35,6 +44,14 @@ Route::middleware(['isAdmin'])->group(function () {
     Route::post('users/update', [UserController::class, 'update'])->name('users.update');
     Route::get('users/destroy/{id}/', [UserController::class, 'destroy']);
     Route::get('users/removeall', [UserController::class, 'removeall'])->name('users.removeall');
+});
+
+Route::get('/tables', function(){
+    return view('tables');
+});
+
+Route::get('/profile', function(){
+    return view('profile');
 });
 
 

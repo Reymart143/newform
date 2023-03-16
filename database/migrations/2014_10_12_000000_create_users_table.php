@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('bloodtype');
             $table->string('username');
             $table->string('password');
+            $table->string('password_confirmation');
             $table->string('region');
             $table->string('province');
             $table->string('municipality');

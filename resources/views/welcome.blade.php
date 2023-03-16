@@ -51,11 +51,11 @@
                 position:absolute;
                 top: 22px;
                 right: 35px;
-                background-color: #990f02;
+                background-color: #db151b;
                 padding: 3mm;  
-                font-weight: bold;
+                font-weight: bold;  
                 border-style: solid;
-                border-color: #990f02;
+                border-color: #db151b;
             }
             a:link { 
                 text-decoration: none; 
@@ -85,7 +85,10 @@
             .nav{
                 padding-top: 4mm;
                 padding-bottom: 2mm;
-                background-color: #212121;
+                background-image: url('images/red.jpg');
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
             }
             .footer{          
                 position: relative;

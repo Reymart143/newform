@@ -1,13 +1,24 @@
 {
+  "public/images/key.jpg": {
+    "file": "assets/key-2c4644d3.jpg",
+    "src": "public/images/key.jpg"
+  },
   "resources/js/app.css": {
-    "file": "assets/app-4597174c.css",
+
+    "file": "assets/app-189fd8f2.css",
+
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
-    "css": [
-      "assets/app-4597174c.css"
+    "assets": [
+      "assets/key-2c4644d3.jpg"
     ],
-    "file": "assets/app-7367021a.js",
+    "css": [
+
+      "assets/app-189fd8f2.css"
+    ],
+    "file": "assets/app-e407a1d0.js",
+
     "isEntry": true,
     "src": "resources/js/app.js"
   }
