@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->integer('age');
-            $table->integer('number');
+            $table->string('number');
             $table->date('birthdate');
             $table->string('bloodtype');
             $table->string('username');
@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('barangay');
             $table->string('purok');
             $table->string('image');
+            $table->string('location');
+            
             $table->boolean('role')->default(1);
             $table->timestamps();
         });

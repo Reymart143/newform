@@ -32,7 +32,7 @@ class User extends Authenticatable
         'age',
         'barangay',
         'image',
-      
+       'location'
     ];
 
     /**

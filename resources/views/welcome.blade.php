@@ -136,7 +136,7 @@
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="reg">REGISTER</a>
                                 @endif
-                            @endauth
+                            @endauth    
                         </div>
                     @endif
                 </div>

@@ -7,14 +7,14 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use DataTables;
-use Validator;
+
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function create(request $request){
         
-
+       if($request->password == $request->password_confirmation){
         $img = $request->image;
         $folderPath = "public/";
         
@@ -46,18 +46,30 @@ class UserController extends Controller
                 'age'=> $request->age,
                 'username'=> $request->username,
                 'password'=> $hashed,
-                'image'=>$fileName
+                'image'=>$fileName,
+                'location'=> $request->location
+                
             ]);
-        
-                return response()->json([
+                    return response()->json([
+                   
                     'status'=>200,
                     'message'=> 'Successfully added' ,
+                    
                 ]);
+       }
+       else{
+        return response()->json([
+            'status'=>400,
+            'message'=> 'password does not match' ,
+        ]);
+       }
+
+     
     }
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = User::select('id', 'name','birthdate','gender','age','bloodtype','number','region','province','municipality','barangay','purok','username','image')->get();
+            $data = User::select('id', 'name','birthdate','gender','age','bloodtype','number','region','province','municipality','barangay','purok','username','image','location')->get();
             $region = DB::table('regprovmun')->select('region')->distinct()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function($data){
@@ -71,7 +83,7 @@ class UserController extends Controller
                 ->rawColumns(['checkbox','action'])
                 ->make(true);
         }
-        return view ('users',compact('region')  );
+        return view ('users',compact('region'));
     }
 
     public function province($region){
@@ -89,6 +101,7 @@ class UserController extends Controller
             'data'=> $municipality
         ]);
     }
+  
     public function edit($id)
     {
         if(request()->ajax())
@@ -152,5 +165,5 @@ class UserController extends Controller
             echo 'Data Deleted';
         }
     }
-    
 }
+

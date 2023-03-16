@@ -5,6 +5,7 @@ $('#submit-btn').on('click', function (e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    
     var currentYear = new Date();
     var selectedDate = new Date($('#birthdate').val());
     var current_Year = currentYear.getFullYear();
@@ -12,6 +13,7 @@ $('#submit-btn').on('click', function (e) {
     var age = current_Year - selected_Date;
 
     var userform = {
+        
         'id': $('#hidden_id').val(),
         'name': $('#name').val(),
         'birthdate': $('#birthdate').val(),
@@ -26,7 +28,9 @@ $('#submit-btn').on('click', function (e) {
         'purok': $('#purok').val(),
         'username': $('#username').val(),
         'password': $('#password').val(),
+        'password_confirmation': $('#password_confirmation').val(),
         'image': $('.image-tag').val(),
+        'location': $('#location').val()
     }
 
     if ($(this).val() == 'Update') {
@@ -47,7 +51,9 @@ $('#submit-btn').on('click', function (e) {
             data: userform,
             dataType: 'json',
             success: function (response) {
+                $('#user_datatable').DataTable().ajax.reload();
                 alert(response.message)
+                
             }
         })
     }
@@ -64,3 +70,5 @@ $('#image').on('change', function (e) {
         // $("#previewImage").attr("src", reader1.result);
     }
 });
+
+

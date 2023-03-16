@@ -21,12 +21,13 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::post('/create',[UserController::class, 'create']);
-//admin route
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('province-list/provinces/{region}', [UserController::class, 'province']);
 Route::get('municipalities-list/municipality/{province}', [UserController::class, 'municipality']);
 
+//admin route
 Route::middleware(['isAdmin'])->group(function () {
     Route::get('/users',[UserController::class, 'index'])->name('users.index');
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
@@ -35,4 +36,6 @@ Route::middleware(['isAdmin'])->group(function () {
     Route::get('users/destroy/{id}/', [UserController::class, 'destroy']);
     Route::get('users/removeall', [UserController::class, 'removeall'])->name('users.removeall');
 });
+
+
  
