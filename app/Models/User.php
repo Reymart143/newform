@@ -25,13 +25,16 @@ class User extends Authenticatable
         'number',
         'region',
         'province',
-        'city',
+        'municipality',
         'purok',
         'gender',
         'birthdate',
         'age',
         'barangay',
-        'password_confirmation'
+
+        'image',
+       'location'
+
     ];
 
     /**

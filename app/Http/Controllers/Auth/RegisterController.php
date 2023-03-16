@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -41,6 +42,26 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function register(){
+        $region = DB::table('regprovmun')->select('region')->distinct()->get();
+        return view('auth.register',compact('region'));
+    }
+    public function province($region){
+        $province = DB::table('regprovmun')->select('province')->distinct()->where('region', $region)->get();
+        return response()->json([
+            'status'=> 200,
+            'data'=> $province
+        ]);
+    }
+
+    public function municipality($province){
+        $municipality = DB::table('regprovmun')->select('municipality')->distinct()->where('province', $province)->get();
+        return response()->json([
+            'status'=> 200,
+            'data'=> $municipality
+        ]);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -53,6 +74,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+           
+           
         ]);
     }
 
@@ -68,6 +91,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+        
+      
         ]);
     }
 }

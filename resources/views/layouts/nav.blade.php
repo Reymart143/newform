@@ -1,4 +1,6 @@
+
 <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-image: url('images/red.jpg'); background-repeat:no-repeat;">
+
     <div class="container">
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

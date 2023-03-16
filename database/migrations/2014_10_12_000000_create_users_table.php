@@ -24,10 +24,14 @@ return new class extends Migration
             $table->string('password_confirmation');
             $table->string('region');
             $table->string('province');
-            $table->string('city');
+            $table->string('municipality');
             $table->string('barangay');
             $table->string('purok');
-            $table->boolean('is_admin')->default(0);
+            $table->string('image');
+            $table->string('location');
+            
+            $table->boolean('role')->default(1);
+            $table->timestamps();
         });
     }
 
