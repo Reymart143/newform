@@ -35,8 +35,8 @@ $('#submit-btn').on('click', function (e) {
         dataType: 'json',
         success: function (response) {
             Swal.fire(
-                'Good job!',
-                'Registered Account Successfully',
+                'Account Successfully Registered!',
+                'Login with your Account to check your profile.',
                 'success'
                 ) 
                 $('.form-input').val('')
@@ -46,6 +46,6 @@ $('#submit-btn').on('click', function (e) {
                 $('#city').val(0)
                 $('#barangay').val(0)
                 $('.form-check-input').prop('checked',false)
-        } 
+        }
     })
 })

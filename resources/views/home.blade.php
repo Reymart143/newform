@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('admin.pages.admin-app')
+<!--extends('layouts.app')
 
-@section('content')
+section('content')
 <div class="container">
-    <div class="row">
+    <div class="row" style="background-color: white">
         <div class="col-12 table-responsive">
             <br/>
             <div align ="right">
@@ -15,7 +16,7 @@
                 <tr>
                     <th width="180px">Full name</th>
                     <th>Age</th>
-                    <th>Phone Number</th>
+                    <th width="150px">Phone Number</th>
                     <th width="150px">Blood Type</th>
                     <th>Gender</th>
                     <th>Region</th>
@@ -24,14 +25,14 @@
                     <th>Barangay</th>
                     <th>Purok</th>
                     <th>Username</th>
-                    <th width="150px">Action</th>
+                    <th width="600px">Action</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
         </div>
     </div>
-    <!-- Modal -->
+     Modal 
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -85,5 +86,5 @@
 
 </script>
 
-@endsection
+endsection-->
 
