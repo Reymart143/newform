@@ -1,6 +1,7 @@
 
+
 $('#submit-btn').on('click', function (e) {
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -34,14 +35,15 @@ $('#submit-btn').on('click', function (e) {
         'location': $('#location').val()
     }
 
-    if($(this).val() == 'Update') {
-       $.ajax({
+    if ($(this).val() == 'Update') {
+
+        $.ajax({
             type: 'post',
             url: 'users/update',
             data: userform,
             dataType: 'json',
             success: function (response) {
-                
+            
                 $('#user_datatable').DataTable().ajax.reload();
                 alert(response.message)
             }
@@ -53,36 +55,9 @@ $('#submit-btn').on('click', function (e) {
             data: userform,
             dataType: 'json',
             success: function (response) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Successfully Registered',
-                    showConfirmButton: false,
-                    timer: 1500
-                  })
-                  $('.form-input').val('')         
-            },error: function(response) {
-                $('.form-control').css("background-color", "transparent")
-                var errors = [];
-                var errMsg;
-                var x = 0;
-                $.each(response.responseJSON.errors, function(i, item) {
-                    console.log(item)
-                    errors[x] = item;
-                    x += 1;
-                    $('#'+i).css("background-color", "#ffefef")
-                    console.log(i)
-                });
-                errMsg = JSON.stringify(errors, null, 2)
-                for(var x = 0; x < errors.length; x++){
-                    errMsg = errMsg.replace('[','')
-                    errMsg = errMsg.replace('[', '')
-                    errMsg = errMsg.replace(']', '')
-                    errMsg = errMsg.replace(']', '')
-                    errMsg = errMsg.replace(',', '')
-                    
-                }
-                swal("Something went wrong!", "" + errMsg + "", "error");
+                $('#user_datatable').DataTable().ajax.reload();
+                alert(response.message)
+                
             }
         })
     }

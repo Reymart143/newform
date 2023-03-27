@@ -4,9 +4,7 @@
     "src": "public/images/key.jpg"
   },
   "resources/js/app.css": {
-
-    "file": "assets/app-189fd8f2.css",
-
+    "file": "assets/app-a0f3fa8e.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -14,11 +12,9 @@
       "assets/key-2c4644d3.jpg"
     ],
     "css": [
-
-      "assets/app-189fd8f2.css"
+      "assets/app-a0f3fa8e.css"
     ],
-    "file": "assets/app-e407a1d0.js",
-
+    "file": "assets/app-3334b9ce.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

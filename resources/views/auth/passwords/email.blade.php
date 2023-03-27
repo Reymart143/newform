@@ -25,7 +25,7 @@
 
                             <div class="form-group-log">
                                 <input id="email" type="email" class="form-input-res @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-                                placeholder="Username" required autocomplete="email" autofocus>
+                                placeholder="Phone Number" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

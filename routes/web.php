@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\Auth\RegisterController;
-
+use App\Http\Controllers\tableController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\TableController;
+
 
 
 /*
-|--------------------------------------------------------------------------
+|-------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -22,6 +22,20 @@ use App\Http\Controllers\TableController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+//Route::get('/tables', function () {
+    return view('tables');
+    
+//});
+
+Route::get('/tables',[App\Http\Controllers\UserController::class, 'index']);
+
+Route::get('/profile', function () {
+    return view('profile');
+   
+});
+Route::get('/user', function () {
+    return view('user');
 });
 
 Auth::routes();
@@ -46,13 +60,6 @@ Route::middleware(['isAdmin'])->group(function () {
     Route::get('users/removeall', [UserController::class, 'removeall'])->name('users.removeall');
 });
 
-Route::get('/tables', function(){
-    return view('tables');
-});
-
-Route::get('/profile', function(){
-    return view('profile');
-});
 
 
  

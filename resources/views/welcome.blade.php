@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
        
         <!-- Styles -->
+        
         <style>
             /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */*,
             html{
@@ -108,7 +109,6 @@
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
-                   <!-- background-image:url({{url('images/bk.png')}}); -->
     <body class="antialiased">
 
         <!--footer-->
@@ -129,7 +129,7 @@
                     <a href="/">
                         <img src="images/logo2.png" alt="logo" class="logoimg">
                     </a>
-                    @if (Route::has('login'))
+                      @if (Route::has('login'))
                         <div class="navbutt">
                             @auth
                                 <a href="{{ url('/home') }}" class="home">Home</a>
@@ -144,13 +144,14 @@
                     @endif
                 </div>
             </nav>
-
             <!--body-->
-            <div class="body">        
+            <div class="body">
+                        
             </div>
         </div>
 
         <!--bootstrap script-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
+    
 </html>
