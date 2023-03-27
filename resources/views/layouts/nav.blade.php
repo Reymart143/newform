@@ -1,5 +1,14 @@
 
-<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-image: url('images/red.jpg'); background-repeat:no-repeat;">
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-image: url('images/red.jpg'); background-repeat:no-repeat; background-size: cover;">
+    <div class="container">
+        {{-- <a class="nav-brand" href="{{ url('/') }}" style="color: white; font-weight:bold;">
+            HOME
+        </a> --}}
+        <a href="/">
+            <img src="images/logo2.png" alt="logo" class="logoimg">
+        </a>
+    </div>
+    
 
     <div class="container">
 

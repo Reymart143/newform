@@ -15,10 +15,10 @@
                 <div class="form-body">
                     <input type="hidden" class="control-input" name="token" value="{{ $token }}">
                         <div class="form-group">
-                            <label for="email" class="label-title">Phone Number</label>
+                            <label for="number" class="label-title">Phone Number</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-input @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-                                        @error('email')
+                                    <input id="number" type="number" class="form-input @error('number') is-invalid @enderror" name="number" value="{{ $number ?? old('number') }}" required autocomplete="number" autofocus>
+                                        @error('number')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

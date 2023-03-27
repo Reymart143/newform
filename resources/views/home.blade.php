@@ -1,908 +1,514 @@
-@extends('admin.pages.admin-app')
-<!--extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    
+    @if (Auth::user()->role == 1)
+        <meta charset="utf-8">
+        <title>Admin Dashboard</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        
+    @else
+        <meta charset="utf-8">
+        <title>User Dashboard</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+    @endif
 
-section('content')
-<div class="container">
-    <div class="row" style="background-color: white">
-        <div class="col-12 table-responsive">
-            <br/>
-            <div align ="right">
-                <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i> Add User</button>
+    <!-- Favicon -->
+    <link href="/front/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/front/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/front/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/front/lib/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/front/css/style.css" rel="stylesheet">
+
+    <!-- Font awesome icon CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+
+<body>  
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
-    <br />
-
-        <table class="table table-striped table-bordered" id="user_datatable" style="background-color: white; color:black;">
-            <thead>
-                <tr>
-                    <th width="180px">Full name</th>
-                    <th>Age</th>
-                    <th width="150px">Phone Number</th>
-                    <th width="150px">Blood Type</th>
-                    <th>Gender</th>
-                    <th>Region</th>
-                    <th>Province</th>
-                    <th>Municipality</th>
-                    <th>Barangay</th>
-                    <th>Purok</th>
-                    <th>Username</th>
-                    <th width="600px">Action</th>
-
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        
+        <!-- Spinner End -->
        
-       
+        <!-- Sidebar Start -->
+        
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="{{ url('/home') }}" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"></i>OBX Solutions</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="/front/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="{{ url('/home') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ url('/tables') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Table</a>
+                    <a href="{{ url('/profile') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Profile</a>
+                </div>
+            </nav>
         </div>
+        <!-- Sidebar End -->
+
+        <!-- Content Start -->
+        <div class="content">
+            
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="{{ url('/home') }}" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/front/img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ url('/profile') }} "class="dropdown-item">My Profile</a>
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();"
+                                class="dropdown-item">Log Out</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Navbar End -->
+
+            @if (Auth::user()->role == 1)      
+            <div class="container-fluid pt-4 px-4" >
+                <div class="bg-secondary rounded-top p-4"> 
+                    <div class="mb-3 mt-3"style="text-align: center;">
+                        <div class="bgimg" style="">
+                            <div class="topleft">
+                              <p>Logo</p>
+                            </div>
+                            <div class="middle">
+                              <h1>COMING SOON</h1>
+                              <hr>
+                              <p>35 days</p>
+                            </div>
+                            <div class="bottomleft">
+                              <p>Some text</p>
+                            </div>
+                          </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            @else
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        @include('layouts.sidebar')
+                        <div class="container-fluid pt-4 px-4" >
+                            <div class="bg-secondary rounded-top p-4"> 
+                                <div class="mb-3 mt-3"style="text-align: center;">
+                                    <label style="color:#f5f5f5; font-weight:bold; font-size:22px;">User Dasboard Content Here!</label> 
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="{{ url('/home') }}">OBX Solutions</a>, All Right Reserved. 
+                            <br><i class="fa-solid fa-location-dot"></i> VLC Tower One, Gran Via, Cagayan de Oro City, Misamis Oriental                           
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <i class="fa-regular fa-envelope"></i> info@obxsolution.com
+                            <br><i class="fa-solid fa-business-time"></i> 09:00 am - 05:00 pm
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+
+        <!-- Content End -->
+
+        {{-- <!--MODAL FOR VIEWING START -->
+        {{-- <div id="viewmodal" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <!--MODAL HEADER -->
+                    <div class="modal-header" style="background-color: #EFF0F1;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px; padding-left:10mm; padding-right:10mm;">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 30px;
+                        color: #212121;
+                        padding:20px 0;
+                        font-weight: bolder;">User full details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+
+                    <!--MODAL BODY-->
+                    <div class="modal-body" style="padding:10px 40px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Fullname</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->name }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Age</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->age }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">User Id</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->id }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Username</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->username }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Birthdate</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->birthdate }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Bloodtype</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->bloodtype }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Phone Number</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;>
+                                    <p>{{ Auth::user()->number }}</p>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><label style="color:#000000;  
+                                    font-size: 17px;
+                                    font-weight: normal;">Address</label></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 style="color:#ba1b1b;  
+                                font-size: 17px;
+                                font-weight: normal;">
+                                    <p>{{ Auth::user()->purok }},{{ Auth::user()->barangay }},{{ Auth::user()->municipality }},{{ Auth::user()->province }},{{ Auth::user()->region }}
+                                    </p>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--MODAL FOOTER (BUTTON)-->
+                    <div class="modal-footer" style="background-color: #EFF0F1;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;padding:10px 40px; text-align: right;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="display:inline-block;padding:10px 20px;background-color: red;font-size:17px;border:none;border-radius:5px;color:#bcf5e7;cursor:pointer;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+        <!--MODAL FOR ADD USER START-->
+        {{-- <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form>
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalLabel">Add New User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span id="form_result"></span>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="birthdate" class="form-label">Birthdate</label>
+                                <input type="date" class="form-control" id="birthdate" name="birthdate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender-container" class="form-label">Gender</label>
+                                <div id="gender-container">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="male"
+                                            value="male">
+                                        <label class="form-check-label" for="gender">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="female"
+                                            value="female" checked>
+                                        <label class="form-check-label" for="gender">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="number" class="form-label">Phone Number</label>
+                                <input type="string" class="form-control" id="number" name="number"
+                                    placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bloodtype-container" class="form-label">Blood Type</label>
+                                <div id="bloodtype-container">
+                                    <select id="bloodtype" class="form-select" aria-label="Default select example">
+                                        <option selected>Select BLoodtype</option>
+                                        <option value="0">Type O</option>
+                                        <option value="A">Type A</option>
+                                        <option value="B">Type B</option>
+                                        <option value="AB">Type AB</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Region</i>
+                                    </span>
+                                </div>
+                                <select class="form-control" name="region" id="region" on="getProvince(this);"
+                                    style="max-width: 45% !important; border:solid 1px #d9d8d9; border-radius: 3px;"
+                                    onchange="getProvince(this);">
+                                    @if ($region->count() > 0)
+                                        @foreach ($region as $r)
+                                            <option value="{{ $r->region }}">{{ $r->region }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Province</i>
+                                    </span>
+                                </div>
+                                <select name="province" class="form-control" id="province"
+                                    style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;"
+                                    onchange="getMunicipality(this);">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Municipality</i>
+                                    </span>
+                                </div>
+                                <select name="municipality" class="form-control" id="municipality"
+                                    style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Barangay</i>
+                                    </span>
+                                </div>
+                                <input type="text" name="barangay" id="barangay" class="form-control p-2"
+                                    placeholder="{{ __('Barangay') }}" value="{{ old('name') }}" required
+                                    style="border:solid 1px #d9d8d9; border-radius: 3px;">
+                            </div>
+
+                            <div class="mb-3">
+                                <i class="material-icons">purok </i>
+                                <input type="text" class="form-control" id="purok" name="purok"
+                                    placeholder="Enter your purok">
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter your username">
+                            </div>
+                          
+                        </div>
+                        <input type="hidden" name="action" id="action" value="Add" />
+                        <input type="hidden" name="hidden_id" id="hidden_id" />
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" name="submit-btn" id="submit-btn" value="Add"
+                                class="btn btn-info">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+
+        <!--MODAL FOR DELETE USER START-->
+        {{-- <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> --}} 
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-     Modal 
-    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/front/lib/chart/chart.min.js"></script>
+    <script src="/front/lib/easing/easing.min.js"></script>
+    <script src="/front/lib/waypoints/waypoints.min.js"></script>
+    <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/front/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="/front/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="/front/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-            </div>
-          </div>
-        </div>
-      </div>
-              <script>
-              $('#sample_form').on('submit', function(event){
-                      event.preventDefault(); 
-                      var action_url = '';
-              
-                      if($('#action').val() == 'Add')
-                      {
-                          action_url = "{{ route('users.store') }}";
-                      }
-              
-                      if($('#submit-btn').val() == 'Edit')
-                      {
-                          action_url = "{{ route('users.update') }}";
-                      }
-              
-                      $.ajax({
-                          type: 'post',
-                          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                          url: action_url,
-                          data:$(this).serialize(),
-                          dataType: 'json',
-                          success: function(data) {
-                              console.log('success: '+data);
-                              var html = '';
-                              if(data.errors)
-                              {
-                                  html = '<div class="alert alert-danger">';
-                                  for(var count = 0; count < data.errors.length; count++)
-                                  {
-                                      html += '<p>' + data.errors[count] + '</p>';
-                                  }
-                                  html += '</div>';
-                              }
-                              if(data.success)
-                              {
-                                  html = '<div class="alert alert-success">' + data.success + '</div>';
-                                  $('#sample_form')[0].reset();
-                                  $('#user_datatable').DataTable().ajax.reload();
-                              }
-                              $('#form_result').html(html);
-                          },
-                          error: function(data) {
-                              var errors = data.responseJSON;
-                              console.log(errors);
-                          }
-                      });
-                });
+    <script src="/front/lib/tables/js/jquery.dataTables.min.js"></script>
+    <script src="/front/lib/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="/front/lib/tables/js/datatable-init/datatable-basic.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-              $(document).on('click', '.edit', function(event){
-                      event.preventDefault(); 
-                      var id = $(this).attr('id'); 
-                      $('#form_result').html('');
-              
-                      
-              
-                      $.ajax({
-                          url :"/users/edit/"+id+"/",
-                          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                          dataType:"json",
-                          success:function(data)
-                          {
-                              $('#name').val(data.result.name);
-                              $('#username').val(data.result.username);
-                              $('#number').val(data.result.number);
-                              $('#birthdate').val(data.result.birthdate);
-                              $('#bloodtype').val(data.result.bloodtype);
-                              $('#region').val(data.result.region);
-                              $('#province').val(data.result.province);
-                              
-                              $('#municipality').val(data.result.municipality);
-                              $('#barangay').val(data.result.barangay);
-                              $('#purok').val(data.result.purok);
-                              
-                              $('#hidden_id').val(id);
-                              $('.modal-title').text('Edit Record');
-                              $('#submit-btn').val('Update');
-                              $('#action').val('Edit'); 
-                              
-                              $('#formModal').modal('show');
-                          },
-                          error: function(data) {
-                              var errors = data.responseJSON;
-                              console.log(errors);
-                          }
-                      })
-                  });
-              
-                  var user_id;
-                  </script> -->
+    <!-- Template Javascript -->
+    <script src="/front/js/main.js"></script>
 
-<!-- User profile manual theme-->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  EDIT PROFILE
- </button>
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-  <form>
-   <span id="form_result"></span>
-             <div class="mb-3">
-               <label for="name" class="form-label">Full Name</label>
-               <input type="text" class="form-control" id="name" placeholder="your name" value="{{ Auth::user()->name }}" name="name">
-             </div>
-             <div class="mb-3">
-               <label for="birthdate" class="form-label">Birthdate</label>
-               <input type="text" class="form-control" id="age" placeholder="your age" value="{{ Auth::user()->birthdate }}" name="birthdate">
-             </div>
-           <h3> Age: {{ Auth::user()->age }} </h3 >
-             <div class="mb-3">
-               <label for="gender-container" class="form-label">Gender</label>
-               <div id="gender-container">
-                   <div class="form-check">
-                       <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                       <label class="form-check-label" for="gender">
-                         Male
-                       </label>
-                     </div>
-                     <div class="form-check">
-                       <input class="form-check-input" type="radio" name="gender" id="female" value="female" checked>
-                       <label class="form-check-label" for="gender">
-                         Female
-                       </label>
-                     </div>
-               </div>
-             
-             </div>
-             <div class="mb-3">
-               <label for="number" class="form-label">Phone Number</label>
-               <input type="string" class="form-control" id="number" placeholder="your age" value="{{ Auth::user()->number }}" name="number">
-             <div class="mb-3">
-               <label for="bloodtype-container" class="form-label">Blood Type</label>
-               <div id="bloodtype-container" value="{{ Auth::user()->bloodtype }}" name="bloodtype">
-                   <select id="bloodtype" class="form-select"aria-label="Default select example">
-                   <option selected>Select BLoodtype</option>
-                   <option value="0">Type O</option>
-                   <option value="A">Type A</option>
-                   <option value="B">Type B</option>
-                   <option value="AB">Type AB</option>
-                 </select> 
-               </div>
-             
-             </div>
-                     
-             <div class="input-group mt-2">
-               <div class="input-group-prepend">
-                   <span class="input-group-text">
-                     <i class="material-icons">Address_Region</i>
-                   </span>
-               </div>
-               <select class="form-control" name="region" id="region" on="getProvince(this);" style="max-width: 45% !important; border:solid 1px #d9d8d9; border-radius: 3px;" onchange="getProvince(this);">
-                 @if($region->count()>0)
-                 @foreach($region as $r)
-                   <option value="{{$r->region}}">{{$r->region}}</option>
-                 @endforeach
-                 @endif
-             </select>
-             </div>
+   {{-- <script src="../js/scripts.js"></script>  --}}
+</body>
 
-             <div class="input-group mt-2">
-               <div class="input-group-prepend">
-                   <span class="input-group-text">
-                     <i class="material-icons">Address_Province</i>
-                   </span>
-               </div>
-               <select name="province" class="form-control" id="province" style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;" onchange="getMunicipality(this);">
-                   <option value=""></option>
-               </select>
-             </div>
-
-             <div class="input-group mt-2">
-               <div class="input-group-prepend">
-                   <span class="input-group-text">
-                     <i class="material-icons">Address_Municipality</i>
-                   </span>
-               </div>
-               <select name="municipality" class="form-control" id="municipality" style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;">
-                   <option value=""></option>
-               </select>
-             </div>
-
-             <div class="input-group mt-2">
-               <div class="input-group-prepend">
-                   <span class="input-group-text">
-                     <i class="material-icons">Address_Barangay</i>
-                   </span>
-               </div>
-                 <input type="text" name="barangay" id="barangay" class="form-control p-2" placeholder="{{ __('Barangay') }}" value="{{ Auth::user()->barangay }}"required style="border:solid 1px #d9d8d9; border-radius: 3px;">
-               </div>
-             <div class="mb-3">
-               <label for="purok" class="form-label">Purok</label>
-               <input type="text" class="form-control" id="purok" placeholder="your purok" value="{{ Auth::user()->purok }}" name="purok">
-             <div class="mb-3">
-               <label for="username" class="form-label">Username</label>
-             <input type="text" class="form-control" id="username" placeholder="your username" value="{{ Auth::user()->username }}" name="username">
-             </div>
-             
-               <div class="mb-3">
-                 <label for="image" class="form-label">Upload Image</label>
-                 <input type="file" class="form-control" id="image" value="{{ Auth::user()->image }}"name="image">
-                 <input type="hidden" name="image" class="image-tag">
-               </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-               <input type="submit" name="submit-btn" id="submit-btn" value="save changes" class="btn btn-info" />
-               
-             </div>
-       </div>
-   </form>
-   </div>
-</div>
-</div>
-</div>
-</div> 
-</div>
-</div>
-</div>
-</div>
-</div>
-<script>
-$('#sample_form').on('submit', function(event){
-event.preventDefault(); 
-var action_url = '';
-
-if($('#action').val() == 'Add')
-{
-action_url = "{{ route('users.store') }}";
-}
-
-if($('#submit-btn').val() == 'Edit')
-{
-action_url = "{{ route('users.update') }}";
-}
-
-$.ajax({
-type: 'post',
-headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-url: action_url,
-data:$(this).serialize(),
-dataType: 'json',
-success: function(data) {
-   console.log('success: '+data);
-   var html = '';
-   if(data.errors)
-   {
-       html = '<div class="alert alert-danger">';
-       for(var count = 0; count < data.errors.length; count++)
-       {
-           html += '<p>' + data.errors[count] + '</p>';
-       }
-       html += '</div>';
-   }
-   if(data.success)
-   {
-       html = '<div class="alert alert-success">' + data.success + '</div>';
-       $('#sample_form')[0].reset();
-       $('#user_datatable').DataTable().ajax.reload();
-   }
-   $('#form_result').html(html);
-},
-error: function(data) {
-   var errors = data.responseJSON;
-   console.log(errors);
-}
-});
-});
-
-$(document).on('click', '.edit', function(event){
-event.preventDefault(); 
-var id = $(this).attr('id'); 
-$('#form_result').html('');
-
-
-
-$.ajax({
-url :"/users/edit/"+id+"/",
-headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-dataType:"json",
-success:function(data)
-{
-   $('#name').val(data.result.name);
-   $('#username').val(data.result.username);
-   $('#number').val(data.result.number);
-   $('#birthdate').val(data.result.birthdate);
-   $('#bloodtype').val(data.result.bloodtype);
-   $('#region').val(data.result.region);
-   $('#province').val(data.result.province);
-   
-   $('#municipality').val(data.result.municipality);
-   $('#barangay').val(data.result.barangay);
-   $('#purok').val(data.result.purok);
-   
-   $('#hidden_id').val(id);
-   $('.modal-title').text('Edit Record');
-   $('#submit-btn').val('Update');
-   $('#action').val('Edit'); 
-   
-   $('#formModal').modal('show');
-},
-error: function(data) {
-   var errors = data.responseJSON;
-   console.log(errors);
-}
-})
-});
-
-var user_id;
-</script> 
-
-<div class="container emp-profile">
-  <form method="post">
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-img" class="rounded-circle">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" class="rounded-circle" alt=""/>
-                  <div class="file btn btn-lg btn-primary">
-                      Change Photo
-                      <input type="file" name="file"/>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="profile-head">
-                          <h1>
-                            {{ Auth::user()->name }} 
-                          </h1>
-                          <h3>
-                            {{ Auth::user()->age }} Years Old
-                          </h3>
-                          <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-          <div class="col-md-2">
-            <div class="profile-img" >
-              <img src="https://gl-m.linker-cdn.net/logo/unsaved/370/58b1de71e2c14cdd7137b1576be80fcb_o.jpg" alt=""/>
-              
-          </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-            
-          </div>
-          <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <h4><label>User Id</label></h4>
-                                      
-                                  </div>
-                                  <div class="col-md-6">
-                                     <h4><p>{{ Auth::user()->id }}</p></h4> 
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <h4><label>Username</label></h4>
-                                  </div>
-                                  <div class="col-md-6">
-                                     <h4><p>{{ Auth::user()->username }}</p></h4> 
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                   <h4><label>Birthdate</label></h4> 
-                                </div>
-                                <div class="col-md-6">
-                                  <h4><p>{{ Auth::user()->birthdate }}</p></h4>
-                                </div>
-                            </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <h4><label>Bloodtype</label></h4>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <h4><p>{{ Auth::user()->bloodtype }}</p></h4>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <h4><label>Phone Number</label></h4>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <h4><p>{{ Auth::user()->number }}</p></h4>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <h4><label>Address</label></h4>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <h4><p>{{ Auth::user()->purok }},{{ Auth::user()->barangay }},{{ Auth::user()->municipality }},{{ Auth::user()->province }},{{ Auth::user()->region }}</p></h4>
-                                  </div>
-                              </div>
-                  </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Experience</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Hourly Rate</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>10$/hr</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Total Projects</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>230</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>English Level</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>Expert</p>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                      <label>Availability</label>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <p>6 months</p>
-                                  </div>
-                              </div>
-                      <div class="row">
-                          <div class="col-md-12">
-                              <label>Your Bio</label><br/>
-                              <p>Your detail description</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </form>           
-
-          
-
-@endif
-                  <!-- Modal -->
-                  <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                      <div class="modal-content">
-                      <form>
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="ModalLabel">Add New User</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <span id="form_result"></span>
-                                    <div class="mb-3">
-                                      <label for="name" class="form-label">Full Name</label>
-                                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="birthdate" class="form-label">Birthdate</label>
-                                      <input type="date" class="form-control" id="birthdate" name="birthdate">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="gender-container" class="form-label">Gender</label>
-                                      <div id="gender-container">
-                                          <div class="form-check">
-                                              <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                                              <label class="form-check-label" for="gender">
-                                                Male
-                                              </label>
-                                            </div>
-                                            <div class="form-check">
-                                              <input class="form-check-input" type="radio" name="gender" id="female" value="female" checked>
-                                              <label class="form-check-label" for="gender">
-                                                Female
-                                              </label>
-                                            </div>
-                                      </div>
-                                    
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="number" class="form-label">Phone Number</label>
-                                      <input type="string" class="form-control" id="number" name="number"
-                                      placeholder="Enter your phone number">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="bloodtype-container" class="form-label">Blood Type</label>
-                                      <div id="bloodtype-container">
-                                          <select id="bloodtype" class="form-select" aria-label="Default select example">
-                                          <option selected>Select BLoodtype</option>
-                                          <option value="0">Type O</option>
-                                          <option value="A">Type A</option>
-                                          <option value="B">Type B</option>
-                                          <option value="AB">Type AB</option>
-                                        </select> 
-                                      </div>
-                                    
-                                    </div>
-                                          
-                              <div class="input-group mt-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="material-icons">Address_Region</i>
-                                    </span>
-                                </div>
-                                <select class="form-control" name="region" id="region" on="getProvince(this);" style="max-width: 45% !important; border:solid 1px #d9d8d9; border-radius: 3px;" onchange="getProvince(this);">
-                                  @if($region->count()>0)
-                                  @foreach($region as $r)
-                                    <option value="{{$r->region}}">{{$r->region}}</option>
-                                  @endforeach
-                                  @endif
-                              </select>
-                              </div>
-
-                              <div class="input-group mt-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="material-icons">Address_Province</i>
-                                    </span>
-                                </div>
-                                <select name="province" class="form-control" id="province" style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;" onchange="getMunicipality(this);">
-                                    <option value=""></option>
-                                </select>
-                              </div>
-
-                              <div class="input-group mt-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="material-icons">Address_Municipality</i>
-                                    </span>
-                                </div>
-                                <select name="municipality" class="form-control" id="municipality" style="max-width: 50% !important; border:solid 1px #d9d8d9; border-radius: 3px;">
-                                    <option value=""></option>
-                                </select>
-                              </div>
-
-                              <div class="input-group mt-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                      <i class="material-icons">Address_Barangay</i>
-                                    </span>
-                                </div>
-                                  <input type="text" name="barangay" id="barangay" class="form-control p-2" placeholder="{{ __('Barangay') }}" value="{{ old('name') }}" required style="border:solid 1px #d9d8d9; border-radius: 3px;">
-                                </div>
-                                    <div class="mb-3">
-                                      <label for="purok" class="form-label">Purok</label>
-                                      <input type="text" class="form-control" id="purok" name="purok"
-                                      placeholder="Enter your purok">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="username" class="form-label">Username</label>
-                                      <input type="text" class="form-control" id="username" name="username"
-                                      placeholder="Enter your username">
-                                    </div>
-                                    <div class="mb-3">
-                                      <label for="password" class="form-label">password</label>
-                                      <input type="password" class="form-control" id="password" name="password"
-                                      placeholder="Enter your password">
-                                    </div>
-                                    <div class="mb-3">    
-                                      <label for="" class="form-label">Confirm Password</label>
-                                      <input type="password" class="form-control"  id="password_confirmation" name="password_confirmation"placeholder="Confirm Password">
-                                    </div>  
-                                      <!--take photo -->
-                                      <div class="mb-3">
-                                        <label for="image" class="form-label">Upload Image</label>
-                                        <input type="file" class="form-control" id="image" name="image">
-                                        <input type="hidden" name="image" class="image-tag">
-                                      </div>
-                                    
-                              <input type="hidden" name="action" id="action" value="Add" />
-                              <input type="hidden" name="hidden_id" id="hidden_id" />
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="button" name="submit-btn" id="submit-btn" value="Add" class="btn btn-info">Update</button>
-                          </div>
-                      </form>  
-                      </div>
-                      </div>
-                  </div>
-                  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                      <div class="modal-content">
-                      <form>
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                          </div>
-                          </form>  
-                      </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
- <script>
-    function getProvince(pl){
-        var reg = (pl.value || pl.options[pl.selectedIndex].value);
-
-        $.ajax({
-                url: "{{ url('/province-list/provinces') }}/"+reg,
-                context: document.body,
-                success: function(data){
-                  console.log(data);
-
-                    $('#province').find('option').remove();
-                    $.each(data.data, function(key, value) {
-                            
-                            $('#province').append(`<option value="${value.province}">${value.province}</option>`);
-                        
-                    });
-
-
-                    var e = document.getElementById("province");
-                    var strProvince = e.value;
-
-                    $.ajax({
-                        url: "{{ url('/municipalities-list/municipality') }}/"+strProvince,
-                        context: document.body,
-                        success: function(mun){
-                            console.log(mun);
-                            $('#municipality').find('option').remove();
-                            $.each(mun.data, function(key, value) {
-                                    
-                                    $('#municipality').append(`<option value="${value.municipality}">${value.municipality}</option>`);
-                                    
-                                
-                            });
-                        }
-
-                        
-                    });
-              
-                }
-
-        });
-    };
-
-    function getMunicipality(pl){
-        var prov = (pl.value || pl.options[pl.selectedIndex].value);
-
-        $.ajax({
-                url: "{{ url('/municipalities-list/municipality') }}/"+prov,
-                context: document.body,
-                success: function(data){
-                  console.log(data);
-
-                    $('#municipality').find('option').remove();
-                    $.each(data.data, function(key, value) {
-                            
-                            $('#municipality').append(`<option value="${value.municipality}">${value.municipality}</option>`);
-                    });
-                    setTimeout(addr_search, 1500);
-                }
-        });
-    };
-
-    $(function () {
-        $("select#region").change();
-    });
-
-    var table = $('#user_datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('users.index') }}",
-        
-        columns: [  
-           {data: 'image', name: 'image',
-                render: function (data, type, row) {
-                    var image = '<img src="{{ asset("storage/:image") }}" alt class="w-75 square  "/>';
-                    image = image.replace(':image', data);
-                    return image;
-                }
-            },
-            {data: 'name', name: 'name'},
-            {data: 'birthdate', name: 'birthdate'},
-            {data: 'age', name: 'age'},
-            {data: 'number', name: 'number'},
-            {data: 'bloodtype', name: 'bloodtype'},
-            {data: 'gender', name: 'gender'},
-            {data: 'region', name: 'region'},
-            {data: 'province', name: 'province'},
-            {data: 'municipality', name: 'municipality'},
-            {data: 'barangay', name: 'barangay'},
-            {data: 'purok', name: 'purok'},
-            {data: 'username', name: 'username'},
-            {data: 'location', name: 'location'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-            {data: 'checkbox', name: 'checkbox', orderable:false, searchable:false},
-            
-        ]
-    });
-
-    $('#create_record').click(function(){
-        $('.modal-title').text('Add New User');
-        $('#action_button').val('Add');
-        $('#action').val('Add');
-        $('#form_result').html('');
-
-        $('#formModal').modal('show');
-        $('#submit-btn').text('Create User')
-      
-
-    })
-
-    $(document).on('click', '.edit', function(event){
-    
-              event.preventDefault(); 
-        var id = $(this).attr('id');
-          
-       
-        $('#form_result').html('');
-        $('#submit-btn').text('Update User')
-
-        $.ajax({
-            url :"/users/edit/"+id+"/",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            dataType:"json",
-            success:function(data)
-            {
-                $('#name').val(data.result.name);
-                $('#username').val(data.result.username);
-                $('#number').val(data.result.number);
-                $('#birthdate').val(data.result.birthdate);
-                $('#bloodtype').val(data.result.bloodtype);
-                // $('#region').val(data.result.region);
-                $('#region')
-                .val(data.result.region)
-                .trigger('change');
-                setTimeout(
-                function() 
-                {
-                  $('#province')
-                              .val(data.result.province)
-                              .trigger('change');
-                }, 500);
-                setTimeout(
-                function() 
-                {
-                  
-                $('#municipality')
-                .val('Santa Monica')
-                .trigger('change');
-                }, 1000);
-              // $('#province')
-                // .val('Antique')
-                // .trigger('change');
-                // $('#municipality')
-                // .val(data.result.municipality)
-                // .trigger('change');
-                $('#barangay').val(data.result.barangay);
-                
-                $('#purok').val(data.result.purok);
-                $('#hidden_id').val(id);
-                $('.modal-title').text('Edit Record');
-                $('#submit-btn').val('Update');
-                $('#action').val('Edit'); 
-                $('#formModal').modal('show');
-            },
-            error: function(data) {
-                var errors = data.responseJSON;
-                console.log(errors);
-            }
-        })
-    });
- 
-    
-    var user_id;
-
-    $(document).on('click', '.delete', function(){
-        user_id = $(this).attr('id');
-        $('#confirmModal').modal('show');
-        
-    });
- 
-    $('#ok_button').click(function(){
-        $.ajax({
-            url:"users/destroy/"+user_id,
-            beforeSend:function(){
-                $('#ok_button').text('Deleting...');
-            },
-            success:function(data)
-            {
-                $('#confirmModal').modal('hide');
-                $('#user_datatable').DataTable().ajax.reload();
-                alert('Data Deleted');
-                $('#ok_button').text('Ok');
-            }
-        })
-    });
-
-    $(document).on('click', '#bulk_delete', function(){
-        var id = [];
-        if(confirm("Are you sure you want to Delete this data?"))
-        {
-            $('.users_checkbox:checked').each(function(){
-                id.push($(this).val());
-            });
-            if(id.length > 0)
-            {
-                $.ajax({
-                    url:"{{ route('users.removeall')}}",
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    method:"get",
-                    data:{id:id},
-                    success:function(data)
-                    {
-                        console.log(data);
-                        $('#user_datatable').DataTable().ajax.reload();
-                        alert(data); 
-                    },
-                    error: function(data) {
-                        var errors = data.responseJSON;
-                        console.log(errors);
-                    }
-                });
-            }
-            else
-            {
-                alert("Please select atleast one checkbox");
-            }
-        }
-    });
-
-</script>
-
-endsection-->
-
+</html>
